@@ -10,9 +10,11 @@ export const toJSONValue = item => {
   }
 
   let newItem = item
+
   if (isObject(item)) {
     newItem = EJSON.clone(item)
     adjustTypesToJSONValue(newItem)
   }
+
   return newItem
 }

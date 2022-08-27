@@ -61,3 +61,5 @@ export const newBinary = (len: number) => {
   }
   return new Uint8Array(new ArrayBuffer(len))
 }
+
+export const isObjectAndNotNull = obj => obj !== null && typeof obj === 'object'

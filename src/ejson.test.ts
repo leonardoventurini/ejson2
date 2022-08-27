@@ -219,13 +219,26 @@ test('stringify', () => {
       '  "a": 1\n' +
       '}',
   )
+})
 
-  // @todo Handle circular structures.
-  //
-  // assert.throws(() => {
-  //   const col = new Mongo.Collection('test')
-  //   EJSON.stringify(col)
-  // }, /Converting circular structure to JSON/)
+test('stringify: should ignore circular references in object', () => {
+  const obj: any = { a: true }
+
+  obj.obj = obj
+
+  const str = EJSON.stringify(obj)
+
+  assert.equal(str, '{"a":true}')
+})
+
+test('stringify: should ignore circular references in array', () => {
+  const arr: any[] = [{}, false, null, 21345, 'asdf']
+
+  arr.push(arr)
+
+  const str = EJSON.stringify(arr)
+
+  assert.equal(str, '[{},false,null,21345,"asdf"]')
 })
 
 test('parse', () => {
