@@ -36,6 +36,7 @@ export const EJSON = {
     if (customTypes.has(name)) {
       throw new Error(`Type ${name} already present`)
     }
+
     customTypes.set(name, factory)
   },
 

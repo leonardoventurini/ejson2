@@ -130,7 +130,8 @@ export const builtinConverters = [
       return EJSON._isCustomType(obj)
     },
     toJSONValue(obj) {
-      const jsonValue = () => obj.toJSONValue()
+      const jsonValue = obj.toJSONValue()
+
       return { $type: obj.typeName(), $value: jsonValue }
     },
     fromJSONValue(obj) {
@@ -142,7 +143,7 @@ export const builtinConverters = [
 
       const converter = customTypes.get(typeName)
 
-      return () => converter(obj.$value)
+      return converter(obj.$value)
     },
   },
 ]
