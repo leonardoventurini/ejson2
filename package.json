@@ -1,5 +1,6 @@
 {
   "name": "ejson2",
+  "description": "Extended JSON Evolved",
   "version": "1.0.0",
   "main": "lib/index.js",
   "author": "Leonardo Venturini",
@@ -9,7 +10,8 @@
     "watch": "tsc --watch",
     "vitest:config": "vitest --config test/vitest.config.js",
     "test": "yarn run vitest:config watch",
-    "coverage": "yarn run vitest:config run --coverage"
+    "coverage": "yarn run vitest:config run --coverage",
+    "clean": "rimraf lib"
   },
   "dependencies": {
     "base64-js": "^1.5.1",
@@ -20,5 +22,18 @@
     "@types/chai": "^4.3.3",
     "rimraf": "^3.0.2",
     "vitest": "^0.22.1"
-  }
+  },
+  "repository": "https://github.com/leonardoventurini/ejson2",
+  "bugs": {
+    "url": "https://github.com/leonardoventurini/ejson2/issues"
+  },
+  "keywords": [
+    "ejson",
+    "json",
+    "binary",
+    "serialization",
+    "deserialization",
+    "extended",
+    "extensible"
+  ]
 }

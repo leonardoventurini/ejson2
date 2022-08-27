@@ -1,4 +1,2 @@
-.build*
-.versions
 node_modules
-old
+lib
