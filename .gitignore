@@ -1,0 +1,4 @@
+.build*
+.versions
+node_modules
+old

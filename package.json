@@ -1,0 +1,24 @@
+{
+  "name": "@tstt/ejson",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "author": "Leonardo Venturini",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "vitest:config": "vitest --config test/vitest.config.js",
+    "test": "yarn run vitest:config watch",
+    "coverage": "yarn run vitest:config run --coverage"
+  },
+  "dependencies": {
+    "base64-js": "^1.5.1",
+    "typescript": "^4.8.2"
+  },
+  "devDependencies": {
+    "@tstt/eslint-config": "^0.0.3",
+    "@types/chai": "^4.3.3",
+    "rimraf": "^3.0.2",
+    "vitest": "^0.22.1"
+  }
+}
