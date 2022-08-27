@@ -83,7 +83,7 @@ export const clone = _val => {
     ret = {}
 
     keysOf(val).forEach(key => {
-      if (isObject(val[key])) {
+      if (isObjectAndNotNull(val[key])) {
         if (set.has(val[key])) return
         set.add(val[key])
       }

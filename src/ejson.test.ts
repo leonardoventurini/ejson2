@@ -222,13 +222,13 @@ test('stringify', () => {
 })
 
 test('stringify: should ignore circular references in object', () => {
-  const obj: any = { a: true }
+  const obj: any = { a: true, b: null }
 
   obj.obj = obj
 
   const str = EJSON.stringify(obj)
 
-  assert.equal(str, '{"a":true}')
+  assert.equal(str, '{"a":true,"b":null}')
 })
 
 test('stringify: should ignore circular references in array', () => {
