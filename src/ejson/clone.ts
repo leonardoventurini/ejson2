@@ -31,6 +31,10 @@ export const clone = _val => {
       return val
     }
 
+    if (val.constructor.name === 'ObjectId' && isFunction(val.toString)) {
+      return val.toString()
+    }
+
     if (EJSON.isBinary(val)) {
       ret = EJSON.newBinary(val.length)
 
