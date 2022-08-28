@@ -35,6 +35,10 @@ export const clone = _val => {
       return val.toString()
     }
 
+    if (val.constructor.name === 'model' && isObject(val._doc)) {
+      return internalClone(val._doc)
+    }
+
     if (EJSON.isBinary(val)) {
       ret = EJSON.newBinary(val.length)
 
