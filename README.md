@@ -16,6 +16,21 @@ All tests have been converted to Vitest and all of them pass, including newly ad
 
 If you work with Mongoose now this library automatically converts `ObjectId`s to strings.
 
+## Installation
+
+
+```sh
+yarn add ejson2
+```
+
+or
+
+
+```sh
+npm install ejson2
+```
+
+
 ## Usage
 
 ```js
