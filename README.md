@@ -9,7 +9,7 @@ This is an improved version of the original `ejson` library from Meteor:
 3. Added `base64-js` for handling binary data instead of maintaing own code.
 4. Removed Meteor specific code references.
 
-All tests have been converted to Vitest and all of them pass, including new tests added.
+All tests have been converted to Bun.
 
 ## Roadmap
 
