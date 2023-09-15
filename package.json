@@ -8,20 +8,18 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "vitest:config": "vitest --config test/vitest.config.js",
-    "test": "yarn run vitest:config watch",
-    "coverage": "yarn run vitest:config run --coverage",
+    "test": "bun run test",
     "clean": "rimraf lib"
   },
   "dependencies": {
     "base64-js": "^1.5.1"
   },
   "devDependencies": {
-    "@tstt/eslint-config": "^0.0.3",
+    "@tstt/eslint-config": "^0.2.1",
     "@types/chai": "^4.3.3",
     "bun-types": "^1.0.2",
     "rimraf": "^3.0.2",
-    "typescript": "^4.8.2"
+    "typescript": "^5.2.2"
   },
   "repository": "https://github.com/leonardoventurini/ejson2",
   "bugs": {

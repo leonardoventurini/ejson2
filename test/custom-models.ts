@@ -1,4 +1,4 @@
-import { EJSON } from '../src/ejson'
+import { EJSON } from '../src'
 
 class Address {
   city: string
