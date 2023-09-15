@@ -1,9 +1,9 @@
 import { EJSON } from './ejson'
-import { assert, test } from 'vitest'
+import { expect, test } from 'bun:test'
 import { CustomModels } from '../test/custom-models'
 
 const testSameConstructors = (someObj, compareWith) => {
-  assert.deepEqual(someObj.constructor, compareWith.constructor)
+  expect(someObj.constructor).toEqual(compareWith.constructor)
 
   if (typeof someObj === 'object') {
     Object.keys(someObj).forEach(key => {
@@ -14,7 +14,7 @@ const testSameConstructors = (someObj, compareWith) => {
 }
 
 const testReallyEqual = (someObj, compareWith) => {
-  assert.deepEqual(someObj, compareWith)
+  expect(someObj).toEqual(compareWith)
   testSameConstructors(someObj, compareWith)
 }
 
@@ -42,17 +42,15 @@ test('custom types', () => {
   // have similar toJSONValue results:
   const nakedA = { city: 'Montreal', state: 'Quebec' }
 
-  assert.notEqual(nakedA, address)
-  assert.notEqual(address, nakedA)
+  expect(nakedA).not.toStrictEqual(address)
+  expect(address).not.toStrictEqual(nakedA)
 
   const holder = new CustomModels.Holder(nakedA)
 
-  assert.deepEqual(holder.toJSONValue(), address.toJSONValue()) // sanity check
+  expect(holder.toJSONValue()).toEqual(address.toJSONValue()) // sanity check
 
-  // @ts-ignore
-  assert.notEqual(holder, address)
-  // @ts-ignore
-  assert.notEqual(address, holder)
+  expect(holder).not.toEqual(address)
+  expect(address).not.toEqual(holder)
 
   const d = new Date()
   const obj = new CustomModels.Person('John Doe', d, address)
@@ -62,5 +60,5 @@ test('custom types', () => {
   // Test clone is deep:
   const clone = EJSON.clone(obj)
   clone.address.city = 'Sherbrooke'
-  assert.notEqual(obj, clone)
+  expect(obj).not.toEqual(clone)
 })

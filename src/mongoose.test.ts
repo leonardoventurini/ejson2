@@ -1,5 +1,5 @@
-import { expect, test } from 'vitest'
-import { EJSON } from './ejson'
+import { EJSON } from './ejson';
+import { describe, expect, test } from 'bun:test';
 
 /**
  * Mock ObjectId object.
@@ -7,8 +7,10 @@ import { EJSON } from './ejson'
 class ObjectId {
   constructor(private readonly id: string) {}
 
+  _bsontype = 'ObjectId';
+
   toString() {
-    return this.id
+    return this.id;
   }
 }
 
@@ -20,22 +22,20 @@ class model {
   constructor(public readonly _doc: any) {}
 }
 
-test('should convert mongoose ids to string', () => {
-  const id = new ObjectId('5f9b9b9b9b9b9b9b9b9b9b9b')
+describe('EJSON functionality', () => {
+  test('should convert mongoose ids to string', () => {
+    const id = new ObjectId('5f9b9b9b9b9b9b9b9b9b9b9b');
+    const json = EJSON.stringify({ id });
 
-  const json = EJSON.stringify({ id })
+    expect(json).toEqual('{"id":"5f9b9b9b9b9b9b9b9b9b9b9b"}');
+    expect(EJSON.parse(json)).toEqual({ id: id.toString() });
+  });
 
-  expect(json).to.be.equals('{"id":"5f9b9b9b9b9b9b9b9b9b9b9b"}')
+  test('should convert mongoose models to plain objects', () => {
+    const doc = new model({ hello: 'world' });
+    const json = EJSON.stringify(doc);
 
-  expect(EJSON.parse(json)).to.be.deep.equals({ id: id.toString() })
-})
-
-test('should convert mongoose models to plain objects', () => {
-  const doc = new model({ hello: 'world' })
-
-  const json = EJSON.stringify(doc)
-
-  expect(json).to.be.equals('{"hello":"world"}')
-
-  expect(EJSON.parse(json)).to.be.deep.equals(doc._doc)
-})
+    expect(json).toEqual('{"hello":"world"}');
+    expect(EJSON.parse(json)).toEqual(doc._doc);
+  });
+});
