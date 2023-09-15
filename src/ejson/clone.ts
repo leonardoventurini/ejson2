@@ -7,43 +7,49 @@ import {
 } from '../utils'
 import { EJSON } from './index'
 
-export const clone = _val => {
+export const clone = (rootVal: any) => {
   const set = new WeakSet()
 
-  function internalClone(val) {
-    let ret
+  function internalClone(internalVal: any) {
+    let ret: any
 
-    if (!isObject(val)) {
-      return val
+    if (!isObject(internalVal)) {
+      return internalVal
     }
 
-    if (val === null) {
+    if (internalVal === null) {
       return null // null has typeof "object"
     }
 
-    if (val instanceof Date) {
-      return new Date(val.getTime())
+    if (internalVal instanceof Date) {
+      return new Date(internalVal.getTime())
     }
 
     // RegExps are not really EJSON elements (eg we don't define a serialization
     // for them), but they're immutable anyway, so we can support them in clone.
-    if (val instanceof RegExp) {
-      return val
+    if (internalVal instanceof RegExp) {
+      return internalVal
     }
 
-    if (val.constructor.name === 'ObjectId' && isFunction(val.toString)) {
-      return val.toString()
+    if (
+      internalVal._bsontype === 'ObjectId' &&
+      isFunction(internalVal.toString)
+    ) {
+      return internalVal.toString()
     }
 
-    if (val.constructor.name === 'model' && isObject(val._doc)) {
-      return internalClone(val._doc)
+    if (
+      internalVal.constructor.name === 'model' &&
+      isObject(internalVal._doc)
+    ) {
+      return internalClone(internalVal._doc)
     }
 
-    if (EJSON.isBinary(val)) {
-      ret = EJSON.newBinary(val.length)
+    if (EJSON.isBinary(internalVal)) {
+      ret = EJSON.newBinary(internalVal.length)
 
-      for (let i = 0; i < val.length; i++) {
-        ret[i] = val[i]
+      for (let i = 0; i < internalVal.length; i++) {
+        ret[i] = internalVal[i]
       }
 
       return ret
@@ -66,41 +72,41 @@ export const clone = _val => {
         .filter(val => val !== undefined)
     }
 
-    if (Array.isArray(val)) {
-      return cloneArray(val)
+    if (Array.isArray(internalVal)) {
+      return cloneArray(internalVal)
     }
 
-    if (isArguments(val)) {
-      set.add(val)
+    if (isArguments(internalVal)) {
+      set.add(internalVal)
 
-      return cloneArray(Array.from(val))
+      return cloneArray(Array.from(internalVal))
     }
 
     // handle general user-defined typed Objects if they have a clone method
-    if (isFunction(val.clone)) {
-      return val.clone()
+    if (isFunction(internalVal.clone)) {
+      return internalVal.clone()
     }
 
     // handle other custom types
-    if (EJSON._isCustomType(val)) {
-      return EJSON.fromJSONValue(internalClone(EJSON.toJSONValue(val)))
+    if (EJSON._isCustomType(internalVal)) {
+      return EJSON.fromJSONValue(internalClone(EJSON.toJSONValue(internalVal)))
     }
 
-    set.add(val)
+    set.add(internalVal)
 
     ret = {}
 
-    keysOf(val).forEach(key => {
-      if (isObjectAndNotNull(val[key])) {
-        if (set.has(val[key])) return
-        set.add(val[key])
+    keysOf(internalVal).forEach(key => {
+      if (isObjectAndNotNull(internalVal[key])) {
+        if (set.has(internalVal[key])) return
+        set.add(internalVal[key])
       }
 
-      ret[key] = internalClone(val[key])
+      ret[key] = internalClone(internalVal[key])
     })
 
     return ret
   }
 
-  return internalClone(_val)
+  return internalClone(rootVal)
 }

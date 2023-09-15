@@ -7,3 +7,4 @@ yarn-error.log
 .eslintrc.js
 .mocharc.yaml
 test
+bun.lockb
