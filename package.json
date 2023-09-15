@@ -1,7 +1,7 @@
 {
   "name": "ejson2",
   "description": "Extended JSON Evolved",
-  "version": "1.0.8",
+  "version": "1.0.13",
   "main": "lib/index.js",
   "author": "Leonardo Venturini",
   "license": "MIT",
